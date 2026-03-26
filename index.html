@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>For My Cutipie ❤️</title>
+
+<style>
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:'Segoe UI';background:#0f172a;color:white;overflow-x:hidden;}
+
+h1{text-align:center;margin-top:20px;color:#ff4d8d;}
+.container{text-align:center;margin-top:30px;}
+input{padding:10px;border-radius:10px;border:none;}
+button{padding:10px 20px;border:none;border-radius:20px;background:#ff4d8d;color:white;cursor:pointer;margin-top:10px;transition:0.3s;}
+button:hover{transform:scale(1.08);}
+.hidden{display:none;}
+
+/* hearts */
+.heart{position:fixed;bottom:0;color:#ff4d8d;animation: float 6s linear infinite;}
+@keyframes float{
+0%{transform:translateY(0);opacity:0}
+50%{opacity:1}
+100%{transform:translateY(-100vh);opacity:0}
+}
+
+/* grid */
+.grid{display:grid;grid-template-columns: repeat(4,1fr);gap:12px;padding:20px;}
+.box{
+  height:80px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:10px;
+  border-radius:12px;
+  cursor:pointer;
+  position:relative;
+  transition:0.3s;
+}
+.box:hover{transform:scale(1.05);} 
+
+.box:nth-child(4n+1){background:#ffd6c9;}
+.box:nth-child(4n+2){background:#fff9c4;}
+.box:nth-child(4n+3){background:#d0ebff;}
+.box:nth-child(4n+4){background:#d3f9d8;}
+
+/* 💌 FIXED POSITION */
+.box::after{
+  content:"💌";
+  position:absolute;
+  top:6px;
+  right:8px;
+  font-size:16px;
+}
+
+.title{
+  font-weight:bold;
+  color:#333;
+  padding-right:20px;
+}
+
+.content{
+  display:none;
+  font-size:12px;
+  color:#333;
+  text-align:center;
+  padding:5px;
+}
+
+.box.open .content{display:block;}
+.box.open .title{display:none;}
+.box.open::after{display:none;}
+
+.final{text-align:center;padding:20px;}
+
+/* envelope */
+#envelope{
+  width:400px;
+  height:250px;
+  margin:auto;
+  background:#fff3b0;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  transition: transform 0.8s ease, opacity 0.8s;
+}
+#envelope h3{color:black;}
+.openAnim{transform:rotateX(180deg) scale(1.5); opacity:0;}
+
+/* letter */
+#letterPage{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  display:none;justify-content:center;align-items:center;
+}
+#letterCard{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  color:black;
+  max-width:800px;
+  max-height:80vh;
+  overflow-y:auto;
+  text-align:center;
+}
+
+/* typing - line by line */
+.typing span{
+  display:block;
+  width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  border-right:2px solid black;
+  animation: typing 3s steps(60,end) forwards, blink .7s infinite;
+  margin-bottom:8px;
+}
+
+/* delay each line */
+.typing span:nth-child(1){animation-delay:0s;}
+.typing span:nth-child(2){animation-delay:3s;}
+.typing span:nth-child(3){animation-delay:6s;}
+.typing span:nth-child(4){animation-delay:9s;}
+.typing span:nth-child(5){animation-delay:12s;}
+.typing span:nth-child(6){animation-delay:15s;}
+
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink{50%{border-color:transparent}}
+
+/* celebration */
+#celebration{
+  display:none;
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:black;color:white;
+  justify-content:center;align-items:center;
+  flex-direction:column;text-align:center;
+  overflow:hidden;
+}
+
+.confetti{
+  position:absolute;
+  width:8px;height:8px;
+  animation:fall 3s linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0deg)}
+  100%{transform:translateY(110vh) rotate(360deg)}
+}
+
+/* glowing text */
+.glow{
+  color:#fff;
+  text-shadow: 0 0 10px #ff4d8d, 0 0 20px #ff4d8d;
+  animation: glowAnim 1.5s infinite alternate;
+}
+@keyframes glowAnim{
+  from{ text-shadow: 0 0 5px #ff4d8d; }
+  to{ text-shadow: 0 0 20px #ff99c8; }
+}
+
+/* cake */
+.cake-img{
+  width:260px;
+  margin-top:100px;
+  transition:0.5s;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+}
+
+.cut{
+  transform:scale(0.95) rotate(2deg);
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>FOR MY CUTIPIE ❤️</h1>
+
+<div class="container" id="quiz">
+<p>What do I call you? 😏</p>
+<input type="text" id="ans"><br>
+<button onclick="checkAns()">Submit</button>
+<p id="msg"></p>
+<button id="nextBtn" class="hidden" onclick="showGrid()">Next ➡️</button>
+</div>
+
+<div id="gridSection" class="hidden">
+<h1>💖 100 Reasons Why I Love You 💖</h1>
+
+<div class="grid" id="grid"></div>
+
+<div class="final">
+<h2>Do you love me? 😌</h2>
+<button onclick="goEnvelope()">YES ❤️</button>
+<p>(No option for NO 😏 you HAVE to love me... huh 😌)</p>
+</div>
+</div>
+
+<div id="envelopePage" class="hidden" style="text-align:center;margin-top:50px;">
+<div id="envelope">
+<h3>From your babygirl 💌</h3>
+<button onclick="openEnvelope()">Open</button>
+</div>
+</div>
+
+<div id="letterPage">
+<div id="letterCard">
+<h2>My Love ❤️</h2>
+<p class="typing">
+  <span>Happy Birthday to the love of my life! 🥰</span>
+  <span>Every day with you feels like a blessing, and I thank Shiv ji and Krishna ji for bringing you into my life.</span>
+  <span>You make me laugh, you hold me close when I need comfort, and you make even ordinary moments feel magical.</span>
+  <span>I love your heart, your soul, and every little thing that makes you, you.</span>
+  <span>My love for you grows deeper every day, and I can’t wait to make so many more memories with you. 💖✨</span>
+  <span>You are the most beautiful part of my life... I love you endlessly ❤️</span>
+</p>
+<button onclick="goCelebrate()">Let's Celebrate 🎉</button>
+</div>
+</div>
+
+<div id="celebration">
+<h1 class="glow">🎉 HAPPY BIRTHDAY 🎉</h1>
+<h2 class="glow">CA Hitesh Arora 💖</h2>
+<p>To my special person ❤️</p>
+
+<img src="cake-removebg-preview.png" id="cake" class="cake-img">
+
+</div>
+
+<audio id="music" loop>
+<source src="song1.mp3">
+</audio>
+
+<script>
+function checkAns(){
+let val=document.getElementById('ans').value.toLowerCase().trim();
+if(val==='kaku don'){
+document.getElementById('msg').innerText='Correct 😍';
+document.getElementById('nextBtn').classList.remove('hidden');
+}else{
+document.getElementById('msg').innerText='Try again 😜';
+}}
+
+function showGrid(){
+document.getElementById('quiz').style.display='none';
+document.getElementById('gridSection').classList.remove('hidden');
+}
+
+function goEnvelope(){
+document.getElementById('gridSection').style.display='none';
+document.getElementById('envelopePage').classList.remove('hidden');
+}
+
+function openEnvelope(){
+let env=document.getElementById('envelope');
+env.classList.add('openAnim');
+setTimeout(()=>{
+document.getElementById('envelopePage').style.display='none';
+document.getElementById('letterPage').style.display='flex';
+
+let music=document.getElementById('music');
+music.volume=0.5;
+music.play().catch(()=>{});
+
+},700);
+}
+
+function goCelebrate(){
+document.getElementById('letterPage').style.display='none';
+document.getElementById('celebration').style.display='flex';
+
+for(let i=0;i<80;i++){
+let c=document.createElement('div');
+c.className='confetti';
+c.style.left=Math.random()*100+'vw';
+c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+c.style.animationDuration=(Math.random()*2+2)+'s';
+document.body.appendChild(c);
+}
+
+setTimeout(()=>cutCake(),2000);
+}
+
+function cutCake(){
+let cake=document.getElementById('cake');
+cake.classList.add('cut');
+
+setTimeout(()=>{
+cake.insertAdjacentHTML('afterend',
+"<p style='margin-top:10px;'>💖 I Love You 💖</p>"
+);
+},800);
+}
+
+const reasons = [
+
+'I love the way you make me smile. 😊',
+'I love how you always know how to cheer me up. 💖',
+'I love your laughter—it’s contagious. 😂',
+'I love how our love is blessed by Lord Shiva and Lord Krishna. 🕉️💖',
+'I love your hugs—they make me feel safe. 🤗',
+'I love the way you look at me like I’m special. ✨',
+'I love your kindness to everyone around you. 🌸',
+'I love your sense of humor—it brightens my day. 😄',
+'I love how patient you are with me. 🕊️',
+'I love your intelligence and the way you think. 🧠',
+'I love the way you support my dreams. 🌟',
+'I love how you make me feel loved every day. 💞',
+'I love your honesty and trustworthiness. 🗝️',
+'I love your adventurous spirit. 🌍',
+'I love your little quirks—they make you unique. 🥰',
+'I love how you care for your family and friends. 👪',
+'I love the way you hold my hand. 🤝',
+'I love your strength in tough times. 💪',
+'I love your creativity and imagination. 🎨',
+'I love your courage to try new things. 🏹',
+'I love your voice—it soothes me. 🎶',
+'I love the way you say my name. 💌',
+'I love how you remember the little things about me. 📝',
+'I love the way you make me feel beautiful. 🌷',
+'I love your thoughtfulness. 🎁',
+'I love your passion for what you love. 🔥',
+'I love how you make ordinary moments special. ✨',
+'I love the way you apologize when you’re wrong. 🤍',
+'I love your playful side. 🐱',
+'I love your determination and ambition. 🚀',
+'I love how you respect my opinions. 🫂',
+'I love your adventurous taste in food. 🍕',
+'I love the way you cuddle with me. 🛌',
+'I love how you always try to make me happy. 💖',
+'I love your honesty—it’s refreshing. 🌼',
+'I love how you challenge me to be better. 🏆',
+'I love your patience when I’m stubborn. 😅',
+'I love your optimism. ☀️',
+'I love your willingness to help others. 🌱',
+'I love how you make every day feel special. 🎈',
+'I love your gentle heart. 💓',
+'I love how you care about my feelings. 🥺',
+'I love your passion for life. 🌟',
+'I love the way you make me laugh even when I’m sad. 😄',
+'I love your adventurous soul. 🧭',
+'I love how you motivate me. 💪',
+'I love the way you plan surprises. 🎉',
+'I love your hugs—they feel like home. 🏡',
+'I love how you always have my back. 🛡️',
+'I love your honesty and sincerity. 🌹',
+'I love your amazing smile. 😁',
+'I love how you listen to me. 👂',
+'I love your playful teasing. 😏',
+'I love the way you compliment me. 🌸',
+'I love your loyalty. 🖤',
+'I love how you make me feel safe. 🛌',
+'I love your generosity. 🎁',
+'I love your determination. 🏋️',
+'I love your protective nature. 🛡️',
+'I love how you’re always there for me. 🫂',
+'I love your adventurous heart. 🌍',
+'I love how you respect me. 🌷',
+'I love your honesty and integrity. 💎',
+'I love your thoughtfulness. 💌',
+'I love how you make me feel special every day. ✨',
+'I love your sense of humor—it makes life fun. 😄',
+'I love how you motivate me to be better. 🌟',
+'I love your affectionate nature. 🥰',
+'I love your courage to face challenges. 🏹',
+'I love your amazing energy. ⚡',
+'I love how you make even small moments unforgettable. 🎈',
+'I love your sweet texts and calls. 📱',
+'I love your hugs—they melt my stress away. 🌸',
+'I love how you make me feel understood. 🫂',
+'I love your smile—it’s my favorite. 😍',
+'I love how you make me laugh uncontrollably. 😂',
+'I love your adventurous spirit. 🧭',
+'I love how you care for me in little ways. 💖',
+'I love your optimism—it lifts me up. ☀️',
+'I love how you make time for me. 🕰️',
+'I love your warmth and affection. 🔥',
+'I love how you challenge me in a loving way. 🏆',
+'I love your supportive nature. 💪',
+'I love your honesty—it’s priceless. 💎',
+'I love your patience with my moods. 😅',
+'I love your encouragement—it gives me strength. 🌸',
+'I love your ability to make every day brighter. 🌞',
+'I love your adventurous heart. 🌍',
+'I love how you understand me without words. 🫂',
+'I love your little surprises—they make my day. 🎁',
+'I love how you are always genuine. 💖',
+'I love the way you hold me close. 🤗',
+'I love your fun-loving nature. 🎉',
+'I love your honesty in everything. 🌼',
+'I love how you make life exciting. 🚀',
+'I love your love for life—it inspires me. ✨',
+'I love your sweet gestures. 💌',
+'I love how you make ordinary moments magical. 🌟',
+'I love your kindness—it’s unmatched. 🥰',
+'I love you simply for being YOU. ❤️'
+];
+
+
+while(reasons.length < 100){
+reasons.push("Because you are YOU 💖");
+}
+
+const grid=document.getElementById('grid');
+
+reasons.forEach((r,i)=>{
+let box=document.createElement('div');
+box.className='box';
+
+box.innerHTML = `
+<div class="title">Reason ${i+1}</div>
+<div class="content">${r}</div>
+`;
+
+box.onclick=()=>box.classList.add('open');
+
+grid.appendChild(box);
+});
+
+function createHeart(){
+let h=document.createElement('div');
+h.className='heart';
+h.innerHTML='❤️';
+h.style.left=Math.random()*100+'vw';
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+}
+setInterval(createHeart,300);
+</script>
+
+</body>
+</html>
